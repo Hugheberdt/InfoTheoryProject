@@ -43,6 +43,7 @@ public class CorrelationReader {
 	public CorrelationReader() {
 		
 		hej
+		testbranch
 		
 		maxCorrelationDepth = defaultMaxCorrDepth;
 		minCorrelationDepth = defaultMinCorrDepth;
