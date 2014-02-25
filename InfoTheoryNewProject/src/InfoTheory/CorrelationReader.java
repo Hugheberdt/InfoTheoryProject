@@ -40,6 +40,10 @@ public class CorrelationReader {
 	/*
 	 * Initialise the reader with a maximum correlation depth
 	 */
+	
+	String outputString = TextProcessing.processText();
+
+	
 	public CorrelationReader() {
 		
 		hej
