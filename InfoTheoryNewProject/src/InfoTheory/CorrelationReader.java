@@ -43,7 +43,6 @@ public class CorrelationReader {
 	
 	public CorrelationReader() {
 		
-		
 		maxCorrelationDepth = defaultMaxCorrDepth;
 		minCorrelationDepth = defaultMinCorrDepth;
 		corrInfos = new double[0];
