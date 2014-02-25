@@ -42,9 +42,6 @@ public class CorrelationReader {
 	 */
 	public CorrelationReader() {
 		
-		hej
-		testbranch
-		
 		maxCorrelationDepth = defaultMaxCorrDepth;
 		minCorrelationDepth = defaultMinCorrDepth;
 		corrInfos = new double[0];
