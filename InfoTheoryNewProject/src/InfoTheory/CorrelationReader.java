@@ -70,7 +70,7 @@ public class CorrelationReader {
 		//Read all the unique characters and store in uniqueCharacters
 		storeUniqueCharsNFreqs(textAsString);
 		
-		int textMaxCorrDepth = 11;
+		int textMaxCorrDepth = 6;
 		int textMinCorrDepth = 1;
 		
 		//Register all conditional frequencies.		
@@ -80,12 +80,12 @@ public class CorrelationReader {
 		//Compute all conditional probabilities
 		computeCondProbabilities();
 		
-		int testMaxSeqLength = 15;
+		int testMaxSeqLength = 6;
 		//Compute the sequence probabilities
 		computeSeqProb(textAsString, testMaxSeqLength);
 		
 		//Compute the correlation informations
-		int testDepth = 15;
+		int testDepth = 5;
 		computeCorrInfo(testDepth);
 		
 		for (int i = 0; i < testDepth; i++) {

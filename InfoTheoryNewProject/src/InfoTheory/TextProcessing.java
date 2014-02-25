@@ -75,7 +75,7 @@ public class TextProcessing {
 		
 		//String processedText = text;
 		
-		System.out.println("Processed text: " + text);
+//		System.out.println("Processed text: " + text);
 		System.out.println("Length before processing = " + lengthBefore);
 		System.out.println("Length after processing = " +lengthAfter);
 		

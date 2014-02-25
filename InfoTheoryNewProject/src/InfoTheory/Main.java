@@ -6,7 +6,8 @@ public class Main {
 	
 	private static String defaultFilePathKarl = new String("C:\\Users\\KNY\\Desktop\\TextTaxt.txt");
 	private static String defaultFilePathMax = new String("C:/Users/Mäx/Documents/Eclipse/TextProcessingIT/short text.txt");
-	private static String originOfSpeciesPath = new String("C:\\Users\\KNY\\Desktop\\PGOriginOfSpeciesMini.txt");
+	private static String originOfSpeciesMiniPath = new String("C:\\Users\\KNY\\Desktop\\PGOriginOfSpeciesMini.txt");
+	private static String originOfSpeciesPath = new String("C:\\Users\\KNY\\Desktop\\PGOriginOfSpecies.txt");
 	
 	public static void main(String[] args) throws Exception{
 		
@@ -14,23 +15,21 @@ public class Main {
 		
 		String filePath = null;
 		
-		boolean runAsMax = true;
+		boolean runAsMax = false;
 		
-		if (runAsMax == true )
+		if (runAsMax == true)
 		{
 			filePath = defaultFilePathMax;
 		}
 		else{
-			filePath = originOfSpeciesPath; 
+			
+			filePath = originOfSpeciesPath;
+			
 		}
 		
 		firstCorrelationReader.processText(filePath);
 		
-		String output = TextProcessing.processText(filePath);
-		
-//		firstCorrelationReader.displayCorrArray("cter. ");
-	
-
+		String output = TextProcessing.processText(filePath);	
 		
 	}
 
