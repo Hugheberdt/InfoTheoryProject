@@ -23,13 +23,24 @@ public class Main {
 		}
 		else{
 			
-			filePath = originOfSpeciesPath;
+			filePath = originOfSpeciesMiniPath;
 			
 		}
 		
-		firstCorrelationReader.processText(filePath);
+//		firstCorrelationReader.processText(filePath);
 		
-		String output = TextProcessing.processText(filePath);	
+		String processedText = TextProcessing.processText(filePath);
+		
+		int correlationDepth = 5;
+		int correlationInfoDepth = 5;
+		
+		//Compute the text statistics, such as correlation information and conditional
+		//character probabilities.
+		firstCorrelationReader.generateTextStatistics(processedText,
+				correlationDepth, correlationInfoDepth);
+				
+		//Print the correlation info
+		firstCorrelationReader.printCorrelationInfo();
 		
 	}
 

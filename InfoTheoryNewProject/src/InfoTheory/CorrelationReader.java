@@ -112,6 +112,41 @@ public class CorrelationReader {
 		
 	}
 	
+	public void generateTextStatistics(String textAsString, int inputMaxCorrDepth, 
+			int correlationInfoDepth) {
+		
+		//Read all the unique characters and store in uniqueCharacters
+		storeUniqueCharsNFreqs(textAsString);
+		
+		//Default minimum correlation depth. Higher doesn't really make sense.
+		int textMinCorrDepth = 1;
+		
+		//Register all conditional frequencies.		
+		registerMultiDepthCorrs(textAsString, textMinCorrDepth, inputMaxCorrDepth);
+		
+		//Compute all conditional probabilities
+		computeCondProbabilities();
+		
+		//Compute the sequence probabilities
+		computeSeqProb(textAsString, inputMaxCorrDepth);
+		
+		//Compute the correlation informations
+		computeCorrInfo(correlationInfoDepth);
+		
+	}
+	
+	public void printCorrelationInfo() {
+		
+		int nComputedCorrs = corrInfos.length;
+		
+		for (int i = 0; i < nComputedCorrs; i++) {
+			
+			System.out.println("Corr info at level: " + i + " is: " + corrInfos[i]);
+			
+		}
+		
+	}
+	
 	private String buildText(String startingSnippet, int maxCorrelation, int maxLetters) {
 		
 		int currentLength = 0;

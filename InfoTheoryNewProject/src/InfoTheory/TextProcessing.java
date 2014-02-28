@@ -43,7 +43,7 @@ public class TextProcessing {
 		}
 		
 		
-		System.out.println("Original text: " + text);
+//		System.out.println("Original text: " + text);
 		int lengthBefore = text.length();
 		
 		
