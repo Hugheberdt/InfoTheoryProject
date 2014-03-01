@@ -517,7 +517,7 @@ public class CorrelationReader {
 
 	}
 	
-	private String generateRandomText(int targetLength) {
+	public String generateRandomText(int targetLength) {
 		
 		StringBuilder textBuilder = new StringBuilder();
 		
