@@ -29,18 +29,20 @@ public class TextProcessing {
 
 		FileReader file = new FileReader(filePath);
 		BufferedReader reader = new BufferedReader(file);
+		StringBuilder textBuilder = new StringBuilder();
 		
-		String text = "";
 		String line = reader.readLine();
 		
 		String fileName = "Processed text.txt";
 		
-		
 		while ( line!= null)
 		{
-			text += line;
+			textBuilder.append(line);
+//			text += line;
 			line = reader.readLine();
 		}
+		
+		String text = textBuilder.toString();
 		
 		
 //		System.out.println("Original text: " + text);
