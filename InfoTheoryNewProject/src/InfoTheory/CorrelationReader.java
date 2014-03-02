@@ -630,9 +630,18 @@ public class CorrelationReader {
 				
 				if (Math.abs(charProbs[i]) > probTolerance) {
 					
+//					if (charProbs[i] > shortenedCharProbs[i]) {
+//
+//						System.out.println("charProbs greater than shorter charprobs");
+//
+//					}
+					
 					double logFraction = charProbs[i]/shortenedCharProbs[i];
+					
+					double leLogarithm = CorrelationReader.log2(logFraction);
+					
 					tmpCorrInfo = tmpCorrInfo +
-							probPrecedingSeq*CorrelationReader.log2(logFraction);
+							probPrecedingSeq*leLogarithm;
 					
 				} else {
 					
