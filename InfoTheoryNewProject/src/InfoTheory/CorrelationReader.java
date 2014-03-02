@@ -640,8 +640,16 @@ public class CorrelationReader {
 					
 					double leLogarithm = CorrelationReader.log2(logFraction);
 					
-					tmpCorrInfo = tmpCorrInfo +
-							probPrecedingSeq*leLogarithm;
+					if (Math.abs(leLogarithm - 1) > probTolerance) {
+					
+						tmpCorrInfo = tmpCorrInfo +
+								probPrecedingSeq*leLogarithm;
+						
+					} else {
+						
+						//DO not add anything, the logarithm is considered to be 0
+						
+					}
 					
 				} else {
 					
