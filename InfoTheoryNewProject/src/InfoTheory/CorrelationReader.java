@@ -139,11 +139,19 @@ public class CorrelationReader {
 		
 		int nComputedCorrs = corrInfos.length;
 		
+		double totalCorrInfo = 0.0;
+		
 		for (int i = 0; i < nComputedCorrs; i++) {
 			
 			System.out.println("Corr info at level: " + i + " is: " + corrInfos[i]);
 			
+			totalCorrInfo = totalCorrInfo + corrInfos[i];
+			
 		}
+		
+		System.out.println("Total correlation information is: " + totalCorrInfo);
+		System.out.println("Log2(alphabetSize) is: " + log2(nUniqueCharacters));
+		System.out.println("Entropy SHOULD be: " + (log2(nUniqueCharacters) - totalCorrInfo));
 		
 	}
 	
