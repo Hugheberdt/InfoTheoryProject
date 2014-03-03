@@ -66,6 +66,7 @@ public class TextProcessing {
 		
 		text =	text.replaceAll("\\@", "");  // delete@
 		text =	text.replaceAll("[0-9]", "");  // delete numbers
+		text =	text.replaceAll("\\s", " ");  // delete all white spaces
 		text =	text.replaceAll("      ", " ");  // delete 6 white spaces
 		text =	text.replaceAll("     ", " ");  // delete 5 white spaces
 		text =	text.replaceAll("    ", " ");  // delete 4 white spaces
