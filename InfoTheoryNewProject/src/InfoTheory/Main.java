@@ -20,14 +20,14 @@ public class Main {
 		
 		CorrelationReader firstCorrelationReader = new CorrelationReader();
 		
-		String filePath = defaultFilePathAlice;
+		String filePath = originOfSpeciesMiniPath;
 		
 //		firstCorrelationReader.processText(filePath);
 		
 		String processedText = TextProcessing.processText(filePath);
 		
-		int correlationDepth = 8;
-		int correlationInfoDepth = 8;
+		int correlationDepth = 4;
+		int correlationInfoDepth = 4;
 		
 		//Compute the text statistics, such as correlation information and conditional
 		//character probabilities.

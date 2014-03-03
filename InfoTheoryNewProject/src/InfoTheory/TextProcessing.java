@@ -38,6 +38,7 @@ public class TextProcessing {
 		while ( line!= null)
 		{
 			textBuilder.append(line);
+			textBuilder.append(" ");
 //			text += line;
 			line = reader.readLine();
 		}
@@ -55,6 +56,7 @@ public class TextProcessing {
 		text = text.replaceAll("don't", "do not").replaceAll("didn't", "did not").replaceAll("can't", "can not").replaceAll("won't", "will not").replaceAll("would't", "would not").replaceAll("couldn't", "could not").replaceAll("haven't", "have not").replaceAll("hasn't", "has not").replaceAll("ain't", "am not");// ain't??
 		text = text.replaceAll("isn't", "is not").replaceAll("aren't", "are not").replaceAll("weren't", "were not");
 		text = text.replaceAll("i'll", "i will").replaceAll("he'll", "he will").replaceAll("she'll", "she will").replaceAll("it'll", "it will").replaceAll("you'll", "you will").replaceAll("we'll", "we will");
+		// add i'd, he'd .....
 		
 		text = text.replaceAll("\\.", " ").replaceAll("\\:", " ").replaceAll("\\,", " ").replaceAll("\\;", " ").replaceAll("\\?", " ").replaceAll("\\!", " ");
 		text = text.replaceAll("\\(", " ").replaceAll("\\)", " ").replaceAll("\\[", " ").replaceAll("\\]", " ").replaceAll("\\{", " ").replaceAll("\\}", " ");// delete brackets
