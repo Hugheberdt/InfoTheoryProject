@@ -20,19 +20,7 @@ public class Main {
 		
 		CorrelationReader firstCorrelationReader = new CorrelationReader();
 		
-		String filePath = null;
-		
-		boolean runAsMax = true;
-		
-		if (runAsMax == true)
-		{
-			filePath = defaultFilePathMax;
-		}
-		else{
-			
-			filePath = originOfSpeciesPath;
-			
-		}
+		String filePath = defaultFilePathAlice;
 		
 //		firstCorrelationReader.processText(filePath);
 		
