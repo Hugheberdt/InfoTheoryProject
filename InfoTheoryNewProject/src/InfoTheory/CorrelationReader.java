@@ -554,7 +554,7 @@ public class CorrelationReader {
 			double[] probArray = new double[nUniqueCharacters];
 			
 			//Sum the total number of frequencies
-			double sum = 0;			
+			double sum = 0;
 			for (int i = 0; i < nUniqueCharacters; i++) {
 				
 				sum = sum + tmpFreqArray[i];
@@ -618,14 +618,14 @@ public class CorrelationReader {
 				
 			}
 			
-			
 			//For conditional probability on string without the first element
 			String shortenedCharSeq = charSeq.substring(1);
 			double[] shortenedCharProbs = allCondProbMap.get(shortenedCharSeq);
 			
 			double probPrecedingSeq = allSequencesProbMap.get(charSeq);
 			
-			double tmpCorrInfo = 0;
+			double tmpCorrInfo = 0.0;
+			
 			for (int i = 0; i < charProbs.length; i++) {
 				
 				if (Math.abs(charProbs[i]) > probTolerance) {
@@ -640,10 +640,11 @@ public class CorrelationReader {
 					
 					double leLogarithm = CorrelationReader.log2(logFraction);
 					
-					if (Math.abs(leLogarithm - 1) > probTolerance) {
+					if (Math.abs(logFraction - 1) > probTolerance) {
+						
+						double newCorrInfo = probPrecedingSeq*charProbs[i]*leLogarithm;
 					
-						tmpCorrInfo = tmpCorrInfo +
-								probPrecedingSeq*leLogarithm;
+						tmpCorrInfo = tmpCorrInfo + newCorrInfo;
 						
 					} else {
 						

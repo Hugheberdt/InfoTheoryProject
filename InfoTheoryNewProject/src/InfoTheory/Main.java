@@ -23,7 +23,7 @@ public class Main {
 		}
 		else{
 			
-			filePath = originOfSpeciesPath;
+			filePath = originOfSpeciesMiniPath;
 			
 		}
 		
@@ -31,8 +31,8 @@ public class Main {
 		
 		String processedText = TextProcessing.processText(filePath);
 		
-		int correlationDepth = 5;
-		int correlationInfoDepth = 5;
+		int correlationDepth = 8;
+		int correlationInfoDepth = 8;
 		
 		//Compute the text statistics, such as correlation information and conditional
 		//character probabilities.

@@ -84,7 +84,7 @@ public class TextProcessing {
 		try{
 			PrintWriter outputStream = new PrintWriter(fileName);
 			outputStream.println(text); // stores in RAM first
-			//outputStream.flush();
+//			outputStream.flush();
 			outputStream.close(); // flushes the data to the file
 			System.out.println("Output file generated!");
 			}
