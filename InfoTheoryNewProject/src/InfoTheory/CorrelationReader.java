@@ -1,9 +1,13 @@
 package InfoTheory;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -155,7 +159,7 @@ public class CorrelationReader {
 		
 	}
 	
-	private String buildText(String startingSnippet, int maxCorrelation, int maxLetters) {
+	public String buildText(String startingSnippet, int maxCorrelation, int maxLetters) {
 		
 		int currentLength = 0;
 		
@@ -402,7 +406,6 @@ public class CorrelationReader {
 		}
 		
 		//Loop through the text
-		
 		for (int i = 0; i < textLength - correlationDepth; i++) {
 			
 			//-1 because one must look at the following letter. 
@@ -423,9 +426,6 @@ public class CorrelationReader {
 				allCorrelationsMap.put(charSeq, newIndexArray);
 				
 			} else {
-				
-//				System.out.println("Should modify existing collection, index: "+i);
-//				System.out.println("Current char sequence: "+charSeq);
 				
 				int[] freqArrayToModify = allCorrelationsMap.get(charSeq);
 				
@@ -738,6 +738,116 @@ public class CorrelationReader {
 			
 			allSequencesProbMap.put(tmpSeqDivStage, tmpProb);
 			
+		}
+		
+	}
+
+	
+	public boolean writeStringToFile(String textToWrite, String fileName) {
+		
+		try {
+			
+			PrintWriter outputStream = new PrintWriter(fileName);
+			outputStream.println(textToWrite); // stores in RAM first
+			outputStream.flush();
+			outputStream.close(); // flushes the data to the file
+			System.out.println("Text successfully written to: " + fileName);
+			
+		} catch (FileNotFoundException e) {
+			
+			System.out.println("Text could not be written to: " + fileName);
+			e.printStackTrace();
+			return false;
+			
+		}
+		
+		return true;
+		
+	}
+	
+	public HashMap<String,Integer> getRankSumFrequency(String textAsString) {
+		
+		//Only calculate the absolute frequencies
+		HashMap<String,Integer> wordFrequencyMap = new HashMap<String,Integer>();
+		
+		//Get an array of strings of words
+		String[] wordsInText = textAsString.split("\\s");
+		
+		//Store all the frequencies of unique words
+		for (int i = 0; i < wordsInText.length; i++) {
+			
+			String wordToCheck = wordsInText[i];
+			
+			if (! wordFrequencyMap.containsKey(wordToCheck)) {
+				
+				//Set the frequency of the new word to 1
+				wordFrequencyMap.put(wordToCheck, 1);
+				
+			} else {
+				
+				int updatedFrequency = wordFrequencyMap.get(wordToCheck) + 1;
+				
+				wordFrequencyMap.put(wordToCheck, updatedFrequency);
+				
+			}
+			
+		}
+		
+		return wordFrequencyMap;
+		
+	}
+	
+	public void writeWordsAndFrequenciesToFile(
+			HashMap<String,Integer> wordFrequencyMap,
+			String wordFilePath, String frequencyFilePath) {
+		
+		int nUniqueWords = wordFrequencyMap.size();
+		
+		//Get all keys in the map
+		Set<String> wordsKeys = wordFrequencyMap.keySet();
+		
+		//Cast the key set of the map to an array of strings
+		String[] wordsStringList = (String[]) wordsKeys.toArray(new String[0]);
+		
+		Integer[] frequencyIntList = new Integer[nUniqueWords];
+		
+		//Write all frequencies corresponding to words
+		for (int i = 0; i < nUniqueWords; i++) {
+			
+			frequencyIntList[i] = wordFrequencyMap.get(wordsStringList[i]);
+			
+		}
+		
+		//Write all the words to a text file
+		try {
+ 
+			File freqFile = new File(frequencyFilePath);
+ 
+			// if file doesnt exists, then create it
+			if (!freqFile.exists()) {
+				freqFile.createNewFile();
+			}
+ 
+			FileWriter freqFileWriter = new FileWriter(freqFile.getAbsoluteFile());
+			BufferedWriter freqBWriter = new BufferedWriter(freqFileWriter);
+			
+			for (int i = 0; i < nUniqueWords; i++){
+			
+				freqBWriter.write(frequencyIntList[i]);
+				
+				if (i != nUniqueWords) {
+					
+					freqBWriter.newLine();
+					
+				}
+
+			}
+			freqBWriter.close();
+ 
+		} catch (IOException e) {
+			System.out.println("Could not sucessfully print the frequencies in"
+					+ " word frequency map to file");
+			e.printStackTrace();
 		}
 		
 	}
