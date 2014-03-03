@@ -27,7 +27,7 @@ public class Main {
 		}
 		else{
 			
-			filePath = originOfSpeciesMiniPath;
+			filePath = originOfSpeciesPath;
 			
 		}
 		
