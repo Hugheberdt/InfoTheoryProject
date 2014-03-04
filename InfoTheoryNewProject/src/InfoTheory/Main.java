@@ -54,7 +54,7 @@ public class Main {
 				firstCorrelationReader.getRankSumFrequency(generatedText);
 		
 		//Write the words and frequencies in one column to two different files
-		//in the 
+		//in the output folder
 		
 	}
 
