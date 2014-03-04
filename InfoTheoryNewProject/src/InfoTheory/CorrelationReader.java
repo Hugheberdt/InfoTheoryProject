@@ -890,4 +890,26 @@ public class CorrelationReader {
 		
 	}
 	
+	public static void writeTextToFile(String textAsString, String fileName){
+		
+		try{
+			
+			PrintWriter outputStream = new PrintWriter(fileName);
+			outputStream.println(textAsString); // stores in RAM first
+//			outputStream.flush();
+			outputStream.close(); // flushes the data to the file
+			System.out.println("Output file generated!");
+			
+		}
+		
+			catch (FileNotFoundException e)
+			
+		{
+				
+				e.printStackTrace();
+				
+		}
+		
+	}
+	
 }

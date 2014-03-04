@@ -19,13 +19,15 @@ public class Main {
 	
 	private static String originalWordsPath = new String("Output\\originalWords.txt");
 	private static String originalFrequenciesPath = new String("Output\\originalFrequencies.txt");
+	
+	private static String generatedTextPath = new String("Output\\generatedText.txt");
 
 	
 	public static void main(String[] args) throws Exception{
 		
 		CorrelationReader firstCorrelationReader = new CorrelationReader();
 		
-		String filePath = originOfSpeciesPath;
+		String filePath = biblefilePath;
 		
 //		firstCorrelationReader.processText(filePath);
 		
@@ -53,7 +55,7 @@ public class Main {
 		String generatedText = firstCorrelationReader.buildText(
 				startingSnippet, maxCorrelation, textLength);
 		
-		System.out.println("Test text: " + generatedText);
+//		System.out.println("Test text: " + generatedText);
 		
 		//Compute the frequencies of generated words in a HashMap
 		HashMap<String,Integer> wordsNFrequenciesGen = 
@@ -73,6 +75,9 @@ public class Main {
 		firstCorrelationReader.writeWordsAndFrequenciesToFile(
 				wordsNFrequenciesOriginal, originalWordsPath, originalFrequenciesPath);
 		
+		//Write the generated text to file
+				
+		CorrelationReader.writeTextToFile(generatedText, generatedTextPath);
 		
 	}
 
