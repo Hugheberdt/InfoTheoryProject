@@ -1,5 +1,7 @@
 package InfoTheory;
 
+import java.util.HashMap;
+
 
 public class Main {
 	
@@ -46,6 +48,13 @@ public class Main {
 				startingSnippet, maxCorrelation, textLength);
 		
 		System.out.println("Test text: " + generatedText);
+		
+		//Compute the frequencies of words in a HashMap
+		HashMap<String,Integer> wordsNFrequencies = 
+				firstCorrelationReader.getRankSumFrequency(generatedText);
+		
+		//Write the words and frequencies in one column to two different files
+		//in the 
 		
 	}
 
