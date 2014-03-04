@@ -31,6 +31,8 @@ public class Main {
 		
 		String processedText = TextProcessing.processText(filePath);
 		
+		int lengthOfOriginalText = processedText.length();
+		
 		int correlationDepth = 4;
 		int correlationInfoDepth = 4;
 		
@@ -43,7 +45,8 @@ public class Main {
 		firstCorrelationReader.printCorrelationInfo();
 		
 		//Generate a random text
-		int textLength = 2000;
+//		int textLength = 2000;
+		int textLength = lengthOfOriginalText;
 		int maxCorrelation = correlationDepth;
 		String startingSnippet = "beginning";
 		
