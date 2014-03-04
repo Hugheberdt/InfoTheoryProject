@@ -5,17 +5,20 @@ import java.util.HashMap;
 
 public class Main {
 	
-	private static String defaultFilePathAlice = new String(".\\Books\\Alices Adventure in wonderland.txt");
-	private static String defaultFilePathFifty = new String(".\\Books\\Fifty Notable Years 2014.txt");
-	private static String defaultFilePathGrimms = new String(".\\Books\\Grimms Fairy Tales.txt");
-	private static String defaultFilePathTomSawyer = new String(".\\Books\\The Adventures of Tom Sawyer.txt");
-	private static String defaultFilePathBible = new String(".\\Books\\The Bible.txt");
-	private static String defaultFilePathKoran = new String(".\\Books\\The Koran.txt");
+	private static String aliceFilePath = new String(".\\Books\\Alices Adventure in wonderland.txt");
+	private static String fiftyFilePath = new String(".\\Books\\Fifty Notable Years 2014.txt");
+	private static String grimmsFilePath = new String(".\\Books\\Grimms Fairy Tales.txt");
+	private static String tomSawyerFilePath = new String(".\\Books\\The Adventures of Tom Sawyer.txt");
+	private static String BiblefilePath = new String(".\\Books\\The Bible.txt");
+	private static String koranFilePath = new String(".\\Books\\The Koran.txt");
 	private static String originOfSpeciesMiniPath = new String(".\\Books\\PGOriginOfSpeciesMini.txt");
 	private static String originOfSpeciesPath = new String(".\\Books\\PGOriginOfSpecies.txt");
 	
-	private static String generatedWordsPath = new String(".\\Output\\generatedWords.txt");
-	private static String generatedFrequenciesPath = new String(".\\Output\\generatedFrequencies.txt");
+	private static String generatedWordsPath = new String("Output\\generatedWords.txt");
+	private static String generatedFrequenciesPath = new String("Output\\generatedFrequencies.txt");
+	
+	private static String orginalWordsPath = new String(".\\Output\\originalWords.txt");
+	private static String originalFrequenciesPath = new String(".\\Output\\originalFrequencies.txt");
 
 	
 	public static void main(String[] args) throws Exception{
@@ -54,7 +57,9 @@ public class Main {
 				firstCorrelationReader.getRankSumFrequency(generatedText);
 		
 		//Write the words and frequencies in one column to two different files
-		//in the output folder
+		//in the output folder.
+		firstCorrelationReader.writeWordsAndFrequenciesToFile(
+				wordsNFrequencies, generatedWordsPath, generatedFrequenciesPath);
 		
 	}
 

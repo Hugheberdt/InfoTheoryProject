@@ -821,19 +821,57 @@ public class CorrelationReader {
 		//Write all the words to a text file
 		try {
  
+			File wordFile = new File(wordFilePath);
+ 
+			// if file doesnt exists, then create it
+			if (!wordFile.exists()) {
+				wordFile.createNewFile();
+			}
+			
+			File absoluteWordFile = wordFile.getAbsoluteFile();
+			String fileWordAsString = absoluteWordFile.getPath();
+ 
+			FileWriter wordFileWriter = new FileWriter(absoluteWordFile);
+			BufferedWriter wordBWriter = new BufferedWriter(wordFileWriter);
+			
+			for (int i = 0; i < nUniqueWords; i++){
+			
+				wordBWriter.write(frequencyIntList[i]);
+				
+				if (i != nUniqueWords) {
+					
+					wordBWriter.newLine();
+					
+				}
+
+			}
+			wordBWriter.close();
+ 
+		} catch (IOException e) {
+			System.out.println("Could not sucessfully print the words in"
+					+ " word frequency map to file");
+			e.printStackTrace();
+		}
+		
+		//Write all the frequencies to a text file
+		try {
+ 
 			File freqFile = new File(frequencyFilePath);
  
 			// if file doesnt exists, then create it
 			if (!freqFile.exists()) {
 				freqFile.createNewFile();
 			}
+			
+			File absoluteFreqFile = freqFile.getAbsoluteFile();
+			String fileFreqAsString = absoluteFreqFile.getPath();
  
-			FileWriter freqFileWriter = new FileWriter(freqFile.getAbsoluteFile());
+			FileWriter freqFileWriter = new FileWriter(absoluteFreqFile);
 			BufferedWriter freqBWriter = new BufferedWriter(freqFileWriter);
 			
 			for (int i = 0; i < nUniqueWords; i++){
 			
-				freqBWriter.write(frequencyIntList[i]);
+				freqBWriter.write(Integer.toString(frequencyIntList[i]));
 				
 				if (i != nUniqueWords) {
 					
