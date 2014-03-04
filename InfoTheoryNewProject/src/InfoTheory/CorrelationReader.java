@@ -836,7 +836,7 @@ public class CorrelationReader {
 			
 			for (int i = 0; i < nUniqueWords; i++){
 			
-				wordBWriter.write(frequencyIntList[i]);
+				wordBWriter.write(wordsStringList[i]);
 				
 				if (i != nUniqueWords) {
 					
