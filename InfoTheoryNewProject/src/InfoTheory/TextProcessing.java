@@ -49,14 +49,27 @@ public class TextProcessing {
 //		System.out.println("Original text: " + text);
 		int lengthBefore = text.length();
 		
+		// deleting Roman numbers up to 20, before making letters lower case, since 2 upper case letters after each other do usually not happen
+		// excluding I and V and X and C and M, 
+		
+		text = text.replaceAll("II", " ").replaceAll("III", " ").replaceAll("IV", " ").replaceAll("VI", " ").replaceAll("VII", " ").replaceAll("VIII", " ").replaceAll("IX", " ").replaceAll("XI", " ");
+		text = text.replaceAll("XII", " ").replaceAll("XII", " ").replaceAll("XIII", " ").replaceAll("XIV", " ").replaceAll("XV", " ").replaceAll("XVI", " ").replaceAll("XVII", " ").replaceAll("XVIII", " ").replaceAll("XIX", " ").replaceAll("XX", " ");
+				
+		// all letter to lower case		
 		
 		text = text.toLowerCase(); // all letters lower case
+		
+		// abbreviations
 		
 		text = text.replaceAll("i'm", "i am").replaceAll("you're", "you are").replaceAll("we're", "we are").replaceAll("they're", "they are");
 		text = text.replaceAll("don't", "do not").replaceAll("didn't", "did not").replaceAll("can't", "can not").replaceAll("won't", "will not").replaceAll("would't", "would not").replaceAll("couldn't", "could not").replaceAll("haven't", "have not").replaceAll("hasn't", "has not").replaceAll("ain't", "am not");// ain't??
 		text = text.replaceAll("isn't", "is not").replaceAll("aren't", "are not").replaceAll("weren't", "were not");
 		text = text.replaceAll("i'll", "i will").replaceAll("he'll", "he will").replaceAll("she'll", "she will").replaceAll("it'll", "it will").replaceAll("you'll", "you will").replaceAll("we'll", "we will");
-		// add i'd, he'd .....
+		text = text.replaceAll("i'd", "i would").replaceAll("he'd", "he would").replaceAll("she'd", "she would").replaceAll("it'd", "it would").replaceAll("you'd", "you would").replaceAll("we'd", "we would").replaceAll("they'd", "they would");
+		
+		text = text.replaceAll(" e.g ", " exempli gratia ").replaceAll(" i.e ", " id est ").replaceAll("\\'s.", "s");//.replaceAll(" c.a ", " circa ").replaceAll(" c.", " circa").replaceAll("\\'s.", "");
+		
+		// special signs and characters
 		
 		text = text.replaceAll("\\.", " ").replaceAll("\\:", " ").replaceAll("\\,", " ").replaceAll("\\;", " ").replaceAll("\\?", " ").replaceAll("\\!", " ");
 		text = text.replaceAll("\\(", " ").replaceAll("\\)", " ").replaceAll("\\[", " ").replaceAll("\\]", " ").replaceAll("\\{", " ").replaceAll("\\}", " ");// delete brackets
@@ -64,6 +77,12 @@ public class TextProcessing {
 		text = text.replaceAll("\\§", " ").replaceAll("\\$", " ").replaceAll("\\&", " ").replaceAll("\\%", " ").replaceAll("\\#", " ").replaceAll("\\-", " "); // delete other stuff
 		text = text.replaceAll("\\^", " ").replaceAll("\\°", " ").replaceAll("\\'", " ").replaceAll("\\`", " ").replaceAll("\\´", " ").replaceAll("\\|", " ").replaceAll("\\~", " "); // delete
 		text = text.replaceAll("\""," ").replaceAll("\\\\"," "); // replace quotes and backslashes
+		
+		// delete lonely single letters
+		text = text.replaceAll(" b ", "").replaceAll(" c ", "").replaceAll(" d ", "").replaceAll(" e ", "").replaceAll(" f ", "").replaceAll(" g ", "");
+		text = text.replaceAll(" h ", "").replaceAll(" j ", "").replaceAll(" k ", "").replaceAll(" l ", "").replaceAll(" m ", "").replaceAll(" n ", "");
+		text = text.replaceAll(" o ", "").replaceAll(" p ", "").replaceAll(" q ", "").replaceAll(" r ", "").replaceAll(" t ", "").replaceAll(" u ", "");
+		text = text.replaceAll(" v ", "").replaceAll(" w ", "").replaceAll(" x ", "").replaceAll(" y ", "").replaceAll(" z ", "");
 		
 		
 		text =	text.replaceAll("\\@", "");  // delete@

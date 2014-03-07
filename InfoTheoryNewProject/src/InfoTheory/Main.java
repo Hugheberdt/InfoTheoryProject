@@ -9,7 +9,7 @@ public class Main {
 	private static String fiftyFilePath = new String(".\\Books\\Fifty Notable Years 2014.txt");
 	private static String grimmsFilePath = new String(".\\Books\\Grimms Fairy Tales.txt");
 	private static String tomSawyerFilePath = new String(".\\Books\\The Adventures of Tom Sawyer.txt");
-	private static String biblefilePath = new String(".\\Books\\The Bible.txt");
+	private static String bibleFilePath = new String(".\\Books\\The Bible.txt");
 	private static String koranFilePath = new String(".\\Books\\The Koran.txt");
 	private static String originOfSpeciesMiniPath = new String(".\\Books\\PGOriginOfSpeciesMini.txt");
 	private static String originOfSpeciesPath = new String(".\\Books\\PGOriginOfSpecies.txt");
@@ -27,7 +27,7 @@ public class Main {
 		
 		CorrelationReader firstCorrelationReader = new CorrelationReader();
 		
-		String filePath = biblefilePath;
+		String filePath = aliceFilePath;
 		
 //		firstCorrelationReader.processText(filePath);
 		
@@ -35,8 +35,8 @@ public class Main {
 		
 		int lengthOfOriginalText = processedText.length();
 		
-		int correlationDepth = 4;
-		int correlationInfoDepth = 4;
+		int correlationDepth = 2;
+		int correlationInfoDepth = 2;
 		
 		//Compute the text statistics, such as correlation information and conditional
 		//character probabilities.
