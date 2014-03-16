@@ -5,14 +5,14 @@ import java.util.HashMap;
 
 public class Main {
 	
-	private static String aliceFilePath = new String(".\\Books\\Alices Adventure in wonderland.txt");
+//	private static String aliceFilePath = new String(".\\Books\\Alices Adventure in wonderland.txt");
 	private static String fiftyFilePath = new String(".\\Books\\Fifty Notable Years 2014.txt");
 	private static String grimmsFilePath = new String(".\\Books\\Grimms Fairy Tales.txt");
-	private static String tomSawyerFilePath = new String(".\\Books\\The Adventures of Tom Sawyer.txt");
-	private static String bibleFilePath = new String(".\\Books\\The Bible.txt");
-	private static String koranFilePath = new String(".\\Books\\The Koran.txt");
-	private static String originOfSpeciesMiniPath = new String(".\\Books\\PGOriginOfSpeciesMini.txt");
-	private static String originOfSpeciesPath = new String(".\\Books\\PGOriginOfSpecies.txt");
+//	private static String tomSawyerFilePath = new String(".\\Books\\The Adventures of Tom Sawyer.txt");
+//	private static String bibleFilePath = new String(".\\Books\\The Bible.txt");
+//	private static String koranFilePath = new String(".\\Books\\The Koran.txt");
+//	private static String originOfSpeciesMiniPath = new String(".\\Books\\PGOriginOfSpeciesMini.txt");
+//	private static String originOfSpeciesPath = new String(".\\Books\\PGOriginOfSpecies.txt");
 	
 	private static String generatedWordsPath = new String("Output\\generatedWords.txt");
 	private static String generatedFrequenciesPath = new String("Output\\generatedFrequencies.txt");
@@ -25,54 +25,63 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception{
 		
-		CorrelationReader firstCorrelationReader = new CorrelationReader();
+		CorrelationReader currentCorrelationReader = new CorrelationReader();
 		
-		String filePath = aliceFilePath;
+		String filePath = fiftyFilePath;
 		
-//		firstCorrelationReader.processText(filePath);
+		String basePrefix = "fifty";
 		
+		//The number of different generations of random texts should be made
+		int nGeneratedRealisations = 4;
+		
+		//Process the original text. Cleanup and normalisation.
 		String processedText = TextProcessing.processText(filePath);
 		
 		int lengthOfOriginalText = processedText.length();
 		
-		int correlationDepth = 2;
-		int correlationInfoDepth = 2;
+		int correlationDepth = 3;
+		int correlationInfoDepth = 3;
 		
 		//Compute the text statistics, such as correlation information and conditional
 		//character probabilities.
-		firstCorrelationReader.generateTextStatistics(processedText,
+		currentCorrelationReader.generateTextStatistics(processedText,
 				correlationDepth, correlationInfoDepth);
 				
 		//Print the correlation info
-		firstCorrelationReader.printCorrelationInfo();
+		currentCorrelationReader.printCorrelationInfo();
+		
+		String correlationInfoFileName = "Output\\originalCorrelationInfo.txt"; 
+		
+		//Write the correlation info to a file
+		currentCorrelationReader.writeCorrelationInfoToFile(correlationInfoFileName);
 		
 		//Generate a random text
 //		int textLength = 2000;
 		int textLength = lengthOfOriginalText;
 		int maxCorrelation = correlationDepth;
-		String startingSnippet = "beginning";
+		String startingSnippet = "b";
 		
-		String generatedText = firstCorrelationReader.buildText(
+		String generatedText = currentCorrelationReader.buildText(
 				startingSnippet, maxCorrelation, textLength);
 		
 //		System.out.println("Test text: " + generatedText);
 		
 		//Compute the frequencies of generated words in a HashMap
 		HashMap<String,Integer> wordsNFrequenciesGen = 
-				firstCorrelationReader.getRankSumFrequency(generatedText);
+				currentCorrelationReader.getRankSumFrequency(generatedText);
 		
 		//Write the generated words and frequencies in one column to two different files
 		//in the output folder.
-		firstCorrelationReader.writeWordsAndFrequenciesToFile(
+		currentCorrelationReader.writeWordsAndFrequenciesToFile(
 				wordsNFrequenciesGen, generatedWordsPath, generatedFrequenciesPath);
 		
 		//Compute the frequencies of generated words in a HashMap
 		HashMap<String,Integer> wordsNFrequenciesOriginal = 
-				firstCorrelationReader.getRankSumFrequency(processedText);
+				currentCorrelationReader.getRankSumFrequency(processedText);
 		
 		//Write the generated words and frequencies in one column to two different files
 		//in the output folder.
-		firstCorrelationReader.writeWordsAndFrequenciesToFile(
+		currentCorrelationReader.writeWordsAndFrequenciesToFile(
 				wordsNFrequenciesOriginal, originalWordsPath, originalFrequenciesPath);
 		
 		//Write the generated text to file

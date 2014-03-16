@@ -168,13 +168,35 @@ public class CorrelationReader {
 		
 		while ( currentLength < maxLetters ) {
 			
-			//TODO: May be a performance hit. Maybe better to pass entire string.
-			int lastIndexToCutFrom = genTextBuilder.length() - maxCorrelation;
+			//If the starting snippet is shorter than the maxCorrelation, make a shorter
+			// substring
+			
+			int currentCorrelationDepth = 0;
+			
+			int idealLastIndexToCutFrom = genTextBuilder.length() - maxCorrelation;
+			
+			int lastIndexToCutFrom = 0;
+			
+			if (idealLastIndexToCutFrom < 0) {
+				
+				//Remains 0
+				lastIndexToCutFrom = 0;
+				
+				currentCorrelationDepth = genTextBuilder.length();
+				
+			} else {
+				
+				lastIndexToCutFrom = idealLastIndexToCutFrom;
+				
+				currentCorrelationDepth = maxCorrelation;
+				
+			}
+			
 			String lastfewLetters = genTextBuilder.substring(lastIndexToCutFrom);
 			
 //			System.out.println("Last few letters: " + lastfewLetters);
 			
-			String nextCharacter = sampleNextChar(maxCorrelation, lastfewLetters);
+			String nextCharacter = sampleNextChar(currentCorrelationDepth, lastfewLetters);
 			
 			genTextBuilder.append(nextCharacter);
 			
@@ -908,6 +930,47 @@ public class CorrelationReader {
 				
 				e.printStackTrace();
 				
+		}
+		
+	}
+	
+	public void writeCorrelationInfoToFile(String outputFilePath) {
+		
+		int nComputedCorrs = corrInfos.length;
+		
+		//Write all the correlation informations to a text file
+		try {
+ 
+			File outputFile = new File(outputFilePath);
+ 
+			// if file doesnt exists, then create it
+			if (!outputFile.exists()) {
+				outputFile.createNewFile();
+			}
+			
+			File absoluteOutputFile = outputFile.getAbsoluteFile();
+			String fileOutputAsString = absoluteOutputFile.getPath();
+ 
+			FileWriter outputFileWriter = new FileWriter(absoluteOutputFile);
+			BufferedWriter outputBWriter = new BufferedWriter(outputFileWriter);
+			
+			for (int i = 0; i < nComputedCorrs; i++){
+			
+				outputBWriter.write(Double.toString(corrInfos[i]));
+				
+				if (i != nComputedCorrs) {
+					
+					outputBWriter.newLine();
+					
+				}
+
+			}
+			outputBWriter.close();
+ 
+		} catch (IOException e) {
+			System.out.println("Could not sucessfully print the correlation infos "
+					+ " to file");
+			e.printStackTrace();
 		}
 		
 	}
