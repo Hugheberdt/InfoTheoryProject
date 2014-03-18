@@ -30,6 +30,7 @@ public class CorrelationReader {
 	private String[] uniqueCharacters;
 	private int nUniqueCharacters;
 	private int[] uniqueCharacterFreqs;
+	private double[] uniqueCharacterProbs;
 	private HashMap<String,int[]> allCorrelationsMap;
 	private HashMap<String,double[]> allCondProbMap;
 	private HashMap<String, Double> allSequencesProbMap;
@@ -44,6 +45,7 @@ public class CorrelationReader {
 		corrInfos = new double[0];
 		uniqueCharacters = new String[0];
 		uniqueCharacterFreqs = new int[0];
+		uniqueCharacterProbs = new double[0];
 		nUniqueCharacters = 0;
 		allCorrelationsMap = new HashMap<String,int[]>();
 		allCondProbMap = new HashMap<String,double[]>();
@@ -186,7 +188,7 @@ public class CorrelationReader {
 					
 				} else {
 					
-					System.out.println("Generated a density information character");
+//					System.out.println("Generated a density information character");
 					
 					//Draw a letter from the density information!
 					String nextCharacter = sampleCharPropToFreq(uniqueCharacterFreqs);
@@ -454,10 +456,14 @@ public class CorrelationReader {
 		}
 		
 		this.uniqueCharacterFreqs = new int[nUniqueCharacters];
+		uniqueCharacterProbs = new double[nUniqueCharacters];
+		
+		double totalNumberOfCharacters = (double) textAsString.length();
 		
 		//Use the old Character map to get the character frequencies
 		for (int i = 0; i < nUniqueCharacters; i++) {
 			uniqueCharacterFreqs[i] = uniqueCharsNDensInfo.get(tmpUniqueCharacters[i]);
+			uniqueCharacterProbs[i] = ( (double) uniqueCharacterFreqs[i])/totalNumberOfCharacters;
 		}
 		
 	}
@@ -533,6 +539,26 @@ public class CorrelationReader {
 		Set<String> korrInfoKeys = allCondProbMap.keySet();
 		Iterator<String> korrInfoItr = korrInfoKeys.iterator();
 		
+		//DO density information for all single letter symbols
+		
+		//Get all single characters
+		
+		for (int i = 0; i < nUniqueCharacters; i++) {
+			
+			String currentCharacter = uniqueCharacters[i];
+			
+			double tmpCharFreq = allSequencesProbMap.get(currentCharacter);
+			
+			double densityInfoContribution = 
+					tmpCharFreq*log2(tmpCharFreq*((double) nUniqueCharacters));
+			
+			//Add to the density information
+			corrInfos[0] = corrInfos[0] + densityInfoContribution;
+			
+			int justStop=0;
+			
+		}
+		
 		while (korrInfoItr.hasNext()) {
 			
 			String charSeq = korrInfoItr.next();
@@ -545,26 +571,12 @@ public class CorrelationReader {
 				//Skip the current character sequence, because it is too long to consider.
 				continue;
 				
-			} else if (charSeqLength == 1) {
-				
-				//If the sequence is length 1, correlation info is density info.
-				
-				double tmpCharFreq = allSequencesProbMap.get(charSeq);
-				
-				double densityInfoContribution = 
-						tmpCharFreq*log2(tmpCharFreq*((double) nUniqueCharacters)); 
-				
-				//Add on the density information
-				corrInfos[0] = corrInfos[0] + densityInfoContribution;
-				
-				continue;
-				
 			}
-			
+
 			//For conditional probability on string without the first element
 			String shortenedCharSeq = charSeq.substring(1);
 			double[] shortenedCharProbs = allCondProbMap.get(shortenedCharSeq);
-			
+				
 			double probPrecedingSeq = allSequencesProbMap.get(charSeq);
 			
 			double tmpCorrInfo = 0.0;
@@ -579,7 +591,19 @@ public class CorrelationReader {
 //
 //					}
 					
-					double logFraction = charProbs[i]/shortenedCharProbs[i];
+					double logFraction;
+					
+					//Special case, since the denominator in the logarithm is not a conditional
+					//probability.
+					if (charSeqLength == 1) {
+						
+						logFraction = charProbs[i]/uniqueCharacterProbs[i];
+					
+					} else {
+						
+						logFraction = charProbs[i]/shortenedCharProbs[i];
+						
+					}
 					
 					double leLogarithm = CorrelationReader.log2(logFraction);
 					
@@ -603,7 +627,9 @@ public class CorrelationReader {
 				
 			}
 			
-			corrInfos[charSeqLength - 1] = corrInfos[charSeqLength - 1] + tmpCorrInfo;
+			corrInfos[charSeqLength] = corrInfos[charSeqLength] + tmpCorrInfo;
+			
+			int stopTwice = 1;
 			
 		}
 		
@@ -612,7 +638,9 @@ public class CorrelationReader {
 	/*
 	 * Compute the probabilities for sequences of all lengths up until maxSeqLength
 	 */
-	private void computeSeqProb(String textAsString, int maxSeqLength) {
+	private void computeSeqProb(String textAsString, int maxCorrDepth) {
+		
+		int maxSeqLength = maxCorrDepth + 1;
 		
 		HashMap<String,Integer> seqFreqs = new HashMap<String, Integer>();
 		int textLength = textAsString.length();

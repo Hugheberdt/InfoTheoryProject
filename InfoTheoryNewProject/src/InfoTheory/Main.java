@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) throws Exception{
 		
 //		String filePath = grimmsFilePath;
-		String filePath = testFilePath;
+		String filePath = grimmsFilePath;
 		
 		//The number of different generations of random texts should be made
 		int nGeneratedRealisations = 4;
@@ -26,7 +26,7 @@ public class Main {
 		//The depths for which conditional probabilities are stored in the original text
 //		int[] allCorrelationDepths = {1, 4, 8, 13};
 		
-		int[] allCorrelationDepths = {0};
+		int[] allCorrelationDepths = {4};
 		
 		int nCorrelationDepths = allCorrelationDepths.length;
 		
@@ -80,11 +80,12 @@ public class Main {
 				
 				//Generate a random text
 				int textLength = lengthOfOriginalText;
-				int maxCorrelation = correlationDepth;
+				int maxBuildCorrelation = correlationDepth;
+//				int maxBuildCorrelation = 0;
 				String startingSnippet = "";
 				
 				String generatedText = currentCorrelationReader.buildText(
-						startingSnippet, maxCorrelation, textLength);
+						startingSnippet, maxBuildCorrelation, textLength);
 				
 				//Compute the frequencies of generated words in a HashMap
 				HashMap<String,Integer> wordsNFrequenciesGen = 
@@ -123,11 +124,67 @@ public class Main {
 						"iGeneration" + Integer.toString(iGeneratedText) + ".txt"; 
 						
 				//Write the correlation info to a file
-				currentCorrelationReader.writeCorrelationInfoToFile(genCorrelationInfoFileName);
+				generatedTextCorrelationReader.writeCorrelationInfoToFile(genCorrelationInfoFileName);
 				
 			}
 			
 		}
+		
+//		//Generate 4 completely random texts, calculate statistics and print them.
+//		
+//		CorrelationReader forRandomCorrelationReader = new CorrelationReader();
+//		
+//		int randomCorrdepth = 12;
+//		
+//		//Compute the text statistics, such as correlation information and conditional
+//		//character probabilities.
+//		forRandomCorrelationReader.generateTextStatistics(processedText,
+//				1, 1);
+//		
+//		for (int iRandomText = 0; iRandomText < nGeneratedRealisations ; iRandomText++) {
+//			
+//			String randomText =
+//					forRandomCorrelationReader.generateRandomText(lengthOfOriginalText);
+//			
+//			CorrelationReader randomTextCorrelationReader = new CorrelationReader();
+//			
+//			//Compute the frequencies of random words in a HashMap
+//			HashMap<String,Integer> wordsNFrequenciesRandom = 
+//					forRandomCorrelationReader.getRankSumFrequency(randomText);
+//			
+//			//Update filenames
+//			String randomWordsPath = new String("Output\\randomWords" +
+//					"CorrDepth" + Integer.toString(randomCorrdepth) + "iGeneration" +
+//					Integer.toString(iRandomText) + ".txt");
+//			String randomFrequenciesPath = new String("Output\\randomFrequencies" +
+//					"CorrDepth" + Integer.toString(randomCorrdepth) + "iGeneration" +
+//					Integer.toString(iRandomText) + ".txt");
+//			
+//			//Write the random words and frequencies in one column to two different files
+//			//in the output folder.
+//			forRandomCorrelationReader.writeWordsAndFrequenciesToFile(
+//					wordsNFrequenciesRandom, randomWordsPath, randomFrequenciesPath);
+//			
+//			//Update filename
+//			String randomTextPath = new String("Output\\randomText" +
+//					"CorrDepth" + Integer.toString(randomCorrdepth) + "iGeneration" +
+//					Integer.toString(iRandomText) + ".txt");
+//			
+//			//Write the generated text to file
+//			CorrelationReader.writeTextToFile(randomText, randomTextPath);
+//			
+//			randomTextCorrelationReader.generateTextStatistics(randomText,
+//					randomCorrdepth, randomCorrdepth);
+//			
+//			String randCorrelationInfoFileName = "Output\\randomCorrelationInfo" +
+//					"CorrDepth" + Integer.toString(randomCorrdepth) + 
+//					"iGeneration" + Integer.toString(iRandomText) + ".txt";
+//			
+//			//Write the correlation info to a file
+//			randomTextCorrelationReader.writeCorrelationInfoToFile(randCorrelationInfoFileName);
+//			
+//		}
+		
 		
 	}
 	
