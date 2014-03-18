@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -25,13 +24,8 @@ import java.util.Set;
  * 
  */
 public class CorrelationReader {
-
-	final private static int defaultMaxCorrDepth = 6;
-	final private static int defaultMinCorrDepth = 1;
 	
 	//The maximum length of correlations registered. May affect memory.
-	private int maxCorrelationDepth;
-	private int minCorrelationDepth;
 	private double[] corrInfos;
 	private String[] uniqueCharacters;
 	private int nUniqueCharacters;
@@ -47,8 +41,6 @@ public class CorrelationReader {
 	
 	public CorrelationReader() {
 		
-		maxCorrelationDepth = defaultMaxCorrDepth;
-		minCorrelationDepth = defaultMinCorrDepth;
 		corrInfos = new double[0];
 		uniqueCharacters = new String[0];
 		uniqueCharacterFreqs = new int[0];
@@ -65,56 +57,7 @@ public class CorrelationReader {
 		return ( Math.log(number) / Math.log(2) );
 		
 	}
-	
-	public void processText(String fileName) {
-		
-		//Read in the text
-		String textAsString = readText(fileName);
-		
-		//Read all the unique characters and store in uniqueCharacters
-		storeUniqueCharsNFreqs(textAsString);
-		
-		int textMaxCorrDepth = 6;
-		int textMinCorrDepth = 1;
-		
-		//Register all conditional frequencies.		
-		registerMultiDepthCorrs(textAsString, textMinCorrDepth, textMaxCorrDepth);
-//		registerConditionalAtDepth(textAsString, testCorrDepth);
-		
-		//Compute all conditional probabilities
-		computeCondProbabilities();
-		
-		int testMaxSeqLength = 6;
-		//Compute the sequence probabilities
-		computeSeqProb(textAsString, testMaxSeqLength);
-		
-		//Compute the correlation informations
-		int testDepth = 5;
-		computeCorrInfo(testDepth);
-		
-		for (int i = 0; i < testDepth; i++) {
-			
-			System.out.println("Corr info at level: " + i + " is: " + corrInfos[i]);
-			
-		}
-		
-//		int testMaxHindsight = 2;
-//		String testInitialText = "th";
-//		
-//		String nextCharacter = sampleNextChar(testMaxHindsight, testInitialText);
-//		System.out.println("Next character: " + nextCharacter);
-		
-		//Test building a text
-		int testTextLength = 50;
-		int testMaxCorr = 7;
-//		String testInitialSnippet = "An example ";
-		String testInitialSnippet = "fsddsad";
-		
-		String testGeneratedText = buildText(testInitialSnippet, testMaxCorr, testTextLength);
-		
-		System.out.println("Test text: " + testGeneratedText);
-		
-	}
+
 	
 	public void generateTextStatistics(String textAsString, int inputMaxCorrDepth, 
 			int correlationInfoDepth) {
@@ -123,7 +66,7 @@ public class CorrelationReader {
 		storeUniqueCharsNFreqs(textAsString);
 		
 		//Default minimum correlation depth. Higher doesn't really make sense.
-		int textMinCorrDepth = 1;
+		int textMinCorrDepth = 0;
 		
 		//Register all conditional frequencies.		
 		registerMultiDepthCorrs(textAsString, textMinCorrDepth, inputMaxCorrDepth);
@@ -136,6 +79,8 @@ public class CorrelationReader {
 		
 		//Compute the correlation informations
 		computeCorrInfo(correlationInfoDepth);
+		
+		System.out.println("Checkpoint");
 		
 	}
 	
@@ -204,7 +149,9 @@ public class CorrelationReader {
 			
 		}
 		
-		return genTextBuilder.toString();
+		String theGeneratedText = genTextBuilder.toString();
+		
+		return theGeneratedText;
 		
 	}
 	
@@ -225,9 +172,6 @@ public class CorrelationReader {
 				if (allCorrelationsMap.containsKey(charSeq)) {
 					
 					int[] charFreqList = allCorrelationsMap.get(charSeq);
-					
-//					System.out.println("Corr array of next charSeq: " + charSeq);
-//					displayCorrArray(charSeq);
 					
 					String nextCharacter = sampleCharPropToFreq(charFreqList);
 					
@@ -285,8 +229,6 @@ public class CorrelationReader {
 			}
 			
 		}
-		
-//		System.out.println(nonZeroFrequencies.toString());
 		
 		//Compute the cumulative sum of character frequencies
 		int totalSum = 0;
@@ -351,7 +293,7 @@ public class CorrelationReader {
 		
 		int depth = minDepth;
 		
-		while (depth < (maxDepth + 1) ) {
+		while (depth <= maxDepth ) {
 			
 			registerConditionalAtDepth(textAsString, depth);
 			
@@ -409,7 +351,7 @@ public class CorrelationReader {
 		
 		System.out.println("Found no corresponding index for a certain letter");
 		
-		return nUniqueCharacters + 1;
+		return nUniqueCharacters + 10;
 		
 	}
 	
@@ -421,6 +363,13 @@ public class CorrelationReader {
 		
 		int textLength = textAsString.length();
 		
+		//There are no conditional probabilities for the next characters 
+		if (correlationDepth == 0) {
+			
+			return;
+			
+		}
+		
 		if (uniqueCharacters.length == 0) {
 			
 			System.out.println("All unique characters have not yet been registered");
@@ -431,7 +380,7 @@ public class CorrelationReader {
 		for (int i = 0; i < textLength - correlationDepth; i++) {
 			
 			//-1 because one must look at the following letter. 
-			String charSeq = textAsString.substring(i, i + (correlationDepth));
+			String charSeq = textAsString.substring(i, i + correlationDepth);
 			String nextChar = textAsString.substring(i + correlationDepth, i + correlationDepth + 1);
 			
 			//Get the index of the letter whose frequency should be increased
@@ -513,40 +462,6 @@ public class CorrelationReader {
 		
 	}
 	
-	/*
-	 * Read text from a file with the input filename
-	 */
-	private String readText(String fileName){
-		
-		String textAsString = null;
-		
-	    try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-	        StringBuilder sb = new StringBuilder();
-	        String line = br.readLine();
-
-	        while (line != null) {
-	        	
-	            sb.append(line);
-	            sb.append(' ');
-//	            sb.append(System.lineSeparator());
-	            line = br.readLine();
-	        }
-	        textAsString = sb.toString();
-	        
-//		    System.out.println(textAsString);
-		    
-	    } catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    return textAsString;
-
-	}
-	
 	public String generateRandomText(int targetLength) {
 		
 		StringBuilder textBuilder = new StringBuilder();
@@ -572,7 +487,7 @@ public class CorrelationReader {
 	
 	private void computeCondProbabilities() {
 		
-		//Get all keys in the correlationsmap
+		//Get all keys in the correlations map
 		Set<String> allCharFreqs = allCorrelationsMap.keySet();
 		
 		Iterator<String> keyIter = allCharFreqs.iterator();
@@ -607,14 +522,12 @@ public class CorrelationReader {
 	private void computeCorrInfo(int depthM) {
 		
 		//The array to hold all correlation informations. Update with the known depth.
-		corrInfos = new double[depthM];
+		corrInfos = new double[depthM + 1];
 		
-		//Initialise
-		for (int i = 0; i < depthM; i++) {
-			
-			corrInfos[i] = 0;
-			
-		}
+		//TODO: FIX CORRELATION INFORMATION! QUICKLY! 
+		
+		//Initialise with 0:s
+		Arrays.fill(corrInfos, 0);
 		
 		//Iterate over all elements in allCondProbMap
 		Set<String> korrInfoKeys = allCondProbMap.keySet();
@@ -709,7 +622,7 @@ public class CorrelationReader {
 		for (int iLen = 1; iLen <= maxSeqLength; iLen++) {
 		
 			//Iterate over all characters in the text in chunks of currSeqLength
-			for (int i = 0; i < textLength - iLen; i++) {
+			for (int i = 0; i <= textLength - iLen; i++) {
 				
 				String charSeq = textAsString.substring(i, i + iLen);
 				
@@ -761,6 +674,8 @@ public class CorrelationReader {
 			allSequencesProbMap.put(tmpSeqDivStage, tmpProb);
 			
 		}
+		
+		int finalCheck=1;
 		
 	}
 

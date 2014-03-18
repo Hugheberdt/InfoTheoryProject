@@ -35,13 +35,18 @@ public class TextProcessing {
 		
 		String fileName = "Processed text.txt";
 		
+		//Treat the first row manually
+		textBuilder.append(line);
+		line = reader.readLine();
+		
 		while ( line!= null)
 		{
-			textBuilder.append(line);
 			textBuilder.append(" ");
-//			text += line;
+			textBuilder.append(line);
 			line = reader.readLine();
 		}
+		
+		reader.close();
 		
 		String text = textBuilder.toString();
 		
@@ -67,7 +72,7 @@ public class TextProcessing {
 		text = text.replaceAll("i'll", "i will").replaceAll("he'll", "he will").replaceAll("she'll", "she will").replaceAll("it'll", "it will").replaceAll("you'll", "you will").replaceAll("we'll", "we will");
 		text = text.replaceAll("i'd", "i would").replaceAll("he'd", "he would").replaceAll("she'd", "she would").replaceAll("it'd", "it would").replaceAll("you'd", "you would").replaceAll("we'd", "we would").replaceAll("they'd", "they would");
 		
-		text = text.replaceAll(" e.g ", " exempli gratia ").replaceAll(" i.e ", " id est ").replaceAll("\\'s.", "s");//.replaceAll(" c.a ", " circa ").replaceAll(" c.", " circa").replaceAll("\\'s.", "");
+		text = text.replaceAll(" e.g ", " exempli gratia ").replaceAll(" i.e ", " id est ").replaceAll("\\'s", "s");//.replaceAll(" c.a ", " circa ").replaceAll(" c.", " circa").replaceAll("\\'s.", "");
 		
 		// special signs and characters
 		
