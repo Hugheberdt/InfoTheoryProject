@@ -1,10 +1,8 @@
 package InfoTheory;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,14 +13,6 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-/*
- * TODO: Fix what happens if correlation does not give any next char options
- * TODO: Clean-up up initial text.
- * TODO: Facilitate graphing
- * TODO: Write code that calculates correlation measures
- * TODO: Maybe: Make seeding the next character in generated text faster by calculating cumsum only once.
- * 
- */
 public class CorrelationReader {
 	
 	//The maximum length of correlations registered. May affect memory.
@@ -555,8 +545,6 @@ public class CorrelationReader {
 			//Add to the density information
 			corrInfos[0] = corrInfos[0] + densityInfoContribution;
 			
-			int justStop=0;
-			
 		}
 		
 		while (korrInfoItr.hasNext()) {
@@ -629,8 +617,6 @@ public class CorrelationReader {
 			
 			corrInfos[charSeqLength] = corrInfos[charSeqLength] + tmpCorrInfo;
 			
-			int stopTwice = 1;
-			
 		}
 		
 	}
@@ -702,8 +688,6 @@ public class CorrelationReader {
 			allSequencesProbMap.put(tmpSeqDivStage, tmpProb);
 			
 		}
-		
-		int finalCheck=1;
 		
 	}
 
@@ -794,7 +778,7 @@ public class CorrelationReader {
 			}
 			
 			File absoluteWordFile = wordFile.getAbsoluteFile();
-			String fileWordAsString = absoluteWordFile.getPath();
+//			String fileWordAsString = absoluteWordFile.getPath();
  
 			FileWriter wordFileWriter = new FileWriter(absoluteWordFile);
 			BufferedWriter wordBWriter = new BufferedWriter(wordFileWriter);
@@ -829,7 +813,7 @@ public class CorrelationReader {
 			}
 			
 			File absoluteFreqFile = freqFile.getAbsoluteFile();
-			String fileFreqAsString = absoluteFreqFile.getPath();
+//			String fileFreqAsString = absoluteFreqFile.getPath();
  
 			FileWriter freqFileWriter = new FileWriter(absoluteFreqFile);
 			BufferedWriter freqBWriter = new BufferedWriter(freqFileWriter);
@@ -892,7 +876,7 @@ public class CorrelationReader {
 			}
 			
 			File absoluteOutputFile = outputFile.getAbsoluteFile();
-			String fileOutputAsString = absoluteOutputFile.getPath();
+//			String fileOutputAsString = absoluteOutputFile.getPath();
  
 			FileWriter outputFileWriter = new FileWriter(absoluteOutputFile);
 			BufferedWriter outputBWriter = new BufferedWriter(outputFileWriter);
