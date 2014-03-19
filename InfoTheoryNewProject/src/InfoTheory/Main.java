@@ -17,16 +17,16 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception{
 		
-//		String filePath = grimmsFilePath;
 		String filePath = grimmsFilePath;
+//		String filePath = testFilePath;
 		
 		//The number of different generations of random texts should be made
 		int nGeneratedRealisations = 4;
 		
 		//The depths for which conditional probabilities are stored in the original text
-		int[] allCorrelationDepths = {1, 4, 8, 12};
+//		int[] allCorrelationDepths = {1, 4, 8, 12};
 		
-//		int[] allCorrelationDepths = {12};
+		int[] allCorrelationDepths = {8};
 		
 		int nCorrelationDepths = allCorrelationDepths.length;
 		
@@ -134,7 +134,7 @@ public class Main {
 		
 		CorrelationReader forRandomCorrelationReader = new CorrelationReader();
 		
-		int randomCorrdepth = 6;
+		int randomCorrdepth = 8;
 		
 		//Compute the text statistics, such as correlation information and conditional
 		//character probabilities.
@@ -143,7 +143,7 @@ public class Main {
 		
 //		for (int iRandomText = 0; iRandomText < nGeneratedRealisations ; iRandomText++) {
 			
-			int iRandomText = 0;
+			int iRandomText = 3;
 			
 			String randomText =
 					forRandomCorrelationReader.generateRandomText(lengthOfOriginalText);
