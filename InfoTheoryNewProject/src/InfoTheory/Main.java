@@ -17,16 +17,16 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception{
 		
-		String filePath = grimmsFilePath;
-//		String filePath = testFilePath;
+//		String filePath = grimmsFilePath;
+		String filePath = testFilePath;
 		
 		//The number of different generations of random texts should be made
 		int nGeneratedRealisations = 4;
 		
 		//The depths for which conditional probabilities are stored in the original text
-//		int[] allCorrelationDepths = {1, 4, 8, 12};
+		int[] allCorrelationDepths = {1, 4, 8, 12};
 		
-		int[] allCorrelationDepths = {8};
+//		int[] allCorrelationDepths = {8};
 		
 		int nCorrelationDepths = allCorrelationDepths.length;
 		
@@ -35,10 +35,14 @@ public class Main {
 		
 		int lengthOfOriginalText = processedText.length();
 		
+		int correlationStatDepth = 12;
+		
 //		for (int iCorrDepth = 0; iCorrDepth < nCorrelationDepths; iCorrDepth++) {
-//		
-//			//Current depth for which conditional probabilities are stored in the original text
+		
+			//Current depth for which conditional probabilities are stored in the original text
 //			int correlationDepth = allCorrelationDepths[iCorrDepth];
+			
+//			int correlationDepth = 12;
 //			
 //			int correlationInfoDepth = correlationDepth;
 //			
@@ -47,7 +51,7 @@ public class Main {
 //			//Compute the text statistics, such as correlation information and conditional
 //			//character probabilities.
 //			currentCorrelationReader.generateTextStatistics(processedText,
-//					correlationDepth, correlationInfoDepth);
+//					correlationStatDepth, correlationStatDepth);
 //					
 //			//Print the correlation info
 //			currentCorrelationReader.printCorrelationInfo();
@@ -117,7 +121,7 @@ public class Main {
 //				CorrelationReader generatedTextCorrelationReader = new CorrelationReader();
 //				
 //				generatedTextCorrelationReader.generateTextStatistics(generatedText,
-//						correlationDepth, correlationInfoDepth);
+//						correlationStatDepth, correlationStatDepth);
 //				
 //				String genCorrelationInfoFileName = "Output\\generatedCorrelationInfo" +
 //						"CorrDepth" + Integer.toString(correlationDepth) + 
@@ -127,7 +131,7 @@ public class Main {
 //				generatedTextCorrelationReader.writeCorrelationInfoToFile(genCorrelationInfoFileName);
 //				
 //			}
-//			
+			
 //		}
 		
 		//Generate 4 completely random texts, calculate statistics and print them.
@@ -143,7 +147,7 @@ public class Main {
 		
 //		for (int iRandomText = 0; iRandomText < nGeneratedRealisations ; iRandomText++) {
 			
-			int iRandomText = 3;
+			int iRandomText = 0;
 			
 			String randomText =
 					forRandomCorrelationReader.generateRandomText(lengthOfOriginalText);
